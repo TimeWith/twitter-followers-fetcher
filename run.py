@@ -1,3 +1,4 @@
+from lib import utils
 from lib.google_client import GoogleSheetsClient
 from lib.twitter_client import TwitterClient
 
@@ -11,15 +12,9 @@ def read_user_input():
     another_account_msg = 'Enter another account (type \'end\' to finish): '
     spreadsheet_id_msg = 'Enter the Spreadsheet ID: '
     application_name_msg = (
-        'Enter your Application name (Python Twitter Followers): '
+        'Enter your Application name for SpreadSheets API '
+        '(Python Twitter Followers): '
     )
-    client_secret_file_msg = (
-        'Enter your client_secret filename (client_sercet.json): '
-    )
-    twitter_consumer_key_msg = 'Enter the Twitter Consumer Key: '
-    twitter_consumer_secret_msg = 'Enter the Twitter Consumer Secret: '
-    twitter_access_token_msg = 'Enter the Twitter Access Token: '
-    twitter_access_token_secret_msg = 'Enter the Twitter Access Token Secret: '
 
     input_data = {}
 
@@ -29,15 +24,6 @@ def read_user_input():
         twitter_accounts.append(another_account)
         another_account = raw_input(another_account_msg)
 
-    input_data['twitter_consumer_key'] = raw_input(twitter_consumer_key_msg)
-    input_data['twitter_consumer_secret'] = raw_input(
-        twitter_consumer_secret_msg
-    )
-    input_data['twitter_access_token'] = raw_input(twitter_access_token_msg)
-    input_data['twitter_access_token_secret'] = raw_input(
-        twitter_access_token_secret_msg
-    )
-
     input_data['twitter_accounts'] = twitter_accounts
     input_data['spreadsheet_id'] = raw_input(spreadsheet_id_msg)
 
@@ -45,17 +31,17 @@ def read_user_input():
     input_data['application_name'] = (
         application_name if application_name else 'Python Twitter Followers'
     )
-
-    client_secret_file = raw_input(client_secret_file_msg)
-    input_data['client_secret_file'] = (
-        client_secret_file if client_secret_file else 'client_secret.json'
-    )
     return input_data
 
 
 def main():
     """Main function."""
+    # Load configuration
+    config = utils.read_config()
+
+    # Get input data from user input.
     input_data = read_user_input()
+    input_data.update(config)
 
     # Get data from Twitter API
     twitter_api = TwitterClient({
