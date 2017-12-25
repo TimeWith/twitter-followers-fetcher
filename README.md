@@ -3,19 +3,19 @@ To install, just download and move the folder to your Desktop.
 
 # Run
 ## Step 1
-Setup your Twitter and Google API developer accounts, in order to acquire security credentials to access the APIs. 
+Setup your Twitter and Google API developer accounts, in order to acquire security credentials to access the APIs.
 ### Twitter API
-To setup the Twitter API, you need to create a Twitter Developer account and setup a new Developer App. 
+To setup the Twitter API, you need to create a Twitter Developer account and setup a new Developer App.
 Login with your Twitter Account here: https://apps.twitter.com/
 
 Create a new application here:
-![alt-text](https://github.com/adam-p/markdown-here/raw/master/assets/twitter_step_1.png)
+![alt-text](https://github.com/TimeWith/twitter-followers-fetcher/raw/master/assets/twitter_step_1.png)
 
 Go to the 'Keys and Access Tokens' tab:
-![alt-text](https://github.com/adam-p/markdown-here/raw/master/assets/twitter_step_2.png)
+![alt-text](https://github.com/TimeWith/twitter-followers-fetcher/raw/master/assets/twitter_step_2.png)
 
 Create new Access Tokens:
-![alt-text](https://github.com/adam-p/markdown-here/raw/master/assets/twitter_step_3.png)
+![alt-text](https://github.com/TimeWith/twitter-followers-fetcher/raw/master/assets/twitter_step_3.png)
 
 Keep this page open in your browser, as you will need these tokens to configure your environment when you run the script for the first time.
 
