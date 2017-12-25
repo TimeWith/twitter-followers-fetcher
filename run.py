@@ -47,7 +47,7 @@ def read_user_input():
     )
 
     client_secret_file = raw_input(client_secret_file_msg)
-    input_data['client_secret'] = (
+    input_data['client_secret_file'] = (
         client_secret_file if client_secret_file else 'client_secret.json'
     )
     return input_data
@@ -58,20 +58,28 @@ def main():
     input_data = read_user_input()
 
     # Get data from Twitter API
-    twitter_api = TwitterClient(
-        consumer_key=input_data['twitter_consumer_key'],
-        consumer_secret=input_data['twitter_consumer_secret'],
-        access_token=input_data['twitter_access_token'],
-        access_token_secret=input_data['twitter_access_token_secret']
-    )
-    data = []
+    twitter_api = TwitterClient({
+        'consumer_key': input_data['twitter_consumer_key'],
+        'consumer_secret': input_data['twitter_consumer_secret'],
+        'access_token_key': input_data['twitter_access_token'],
+        'access_token_secret': input_data['twitter_access_token_secret']
+    })
+    twitter_data = {}
     for handler in input_data['twitter_accounts']:
-        data.append(twitter_api.get_followers(screen_name=handler))
+        print 'Getting Twitter data for account: {}'.format(handler)
+        twitter_data[handler] = twitter_api.get_followers(screen_name=handler)
 
     # Format data for the Google Sheet
-    formatted_data = [
-        ['demo', '123']
-    ]
+    print 'Formatting data to send to Google Sheet API ...'
+    formatted_data = []
+    for handler in twitter_data:
+        for item in twitter_data[handler]:
+            formatted_data.append([
+                handler,
+                item.screen_name,
+                item.name,
+                item.email
+            ])
 
     # Save data to a Google Sheet
     print 'Saving data to Google Sheet with ID: {}'.format(
@@ -84,7 +92,7 @@ def main():
     google_api.append_rows(
         input_data['spreadsheet_id'],
         formatted_data,
-        range_name='A1:B1'
+        range_name='A1:D1'
     )
 
 if __name__ == '__main__':
